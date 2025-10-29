@@ -1,0 +1,64 @@
+{
+  "panel": {
+    "domain": "server-panel-v2.kingstoree.web.id",
+    "api_key": "ptla_cnddSfUY8dudg6I4UymKG6jLi1skB0HApATJjO2rqBv",
+    "client_key": "ptlc_Uj5Km1vc9bKvQpyqRlLV7W0CRWUYy9YAcXCjBTGEAuC",
+    "nest_id": "5",
+    "location_id": "1"
+  },
+  "eggs": {
+    "python": "16",
+    "nodejs": "15",
+    "minecraft": "1",
+    "discord": "2",
+    "website": "3",
+    "php": "4",
+    "java": "5"
+  },
+  "resources": {
+    "1gb": {
+      "ram": 1000,
+      "disk": 1000,
+      "cpu": 40,
+      "price": 15000
+    },
+    "2gb": {
+      "ram": 2000,
+      "disk": 1000,
+      "cpu": 60,
+      "price": 25000
+    },
+    "3gb": {
+      "ram": 3000,
+      "disk": 2000,
+      "cpu": 80,
+      "price": 35000
+    },
+    "4gb": {
+      "ram": 4000,
+      "disk": 2000,
+      "cpu": 100,
+      "price": 45000
+    },
+    "5gb": {
+      "ram": 5000,
+      "disk": 3000,
+      "cpu": 120,
+      "price": 55000
+    },
+    "unlimited": {
+      "ram": 0,
+      "disk": 0,
+      "cpu": 0,
+      "price": 200000
+    }
+  },
+  "admin": {
+    "username": "admin",
+    "password": "admin001"
+  },
+  "website": {
+    "name": "King Store Cpanel Private",
+    "version": "1.0.0"
+  }
+}
