@@ -1,0 +1,33 @@
+{
+  "name": "king-store-cpanel-private",
+  "version": "1.0.0",
+  "description": "King Store Cpanel Private - Admin Website for Pterodactyl Panel Management",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@vercel/node": "^2.0.0",
+    "axios": "^1.6.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cookie": "^0.6.0"
+  },
+  "devDependencies": {
+    "vercel": "^28.0.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "keywords": [
+    "pterodactyl",
+    "panel",
+    "admin",
+    "cpanel",
+    "hosting"
+  ],
+  "author": "King Store",
+  "license": "MIT"
+}
