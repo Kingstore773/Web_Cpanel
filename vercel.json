@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/login",
+      "dest": "/public/pages/login.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/public/pages/admin/dashboard.html"
+    },
+    {
+      "src": "/admin/dashboard",
+      "dest": "/public/pages/admin/dashboard.html"
+    },
+    {
+      "src": "/admin/create-panel",
+      "dest": "/public/pages/admin/create-panel.html"
+    },
+    {
+      "src": "/admin/reseller",
+      "dest": "/public/pages/admin/reseller.html"
+    },
+    {
+      "src": "/admin/servers",
+      "dest": "/public/pages/admin/servers.html"
+    },
+    {
+      "src": "/admin/settings",
+      "dest": "/public/pages/admin/settings.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    },
+    {
+      "src": "/(.*\\.(html|css|js|png|jpg|jpeg|gif|svg|ico|json))",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
