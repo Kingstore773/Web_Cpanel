@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King Store Cpanel Private - Pterodactyl Panel Management</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <div class="landing-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🌌 King Store Cpanel</h1>
+                <span>Private</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="/login" class="btn-login">Admin Login</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Powerful Pterodactyl Panel Management</h1>
+                <p>Complete control over your Pterodactyl panels with advanced features and intuitive interface</p>
+                <div class="hero-buttons">
+                    <a href="/login" class="btn btn-primary">
+                        🚀 Get Started
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        📚 Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="dashboard-preview">
+                    <div class="preview-header">
+                        <div class="preview-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-stats">
+                            <div class="stat"></div>
+                            <div class="stat"></div>
+                            <div class="stat"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🛠️</div>
+                        <h3>Panel Creation</h3>
+                        <p>Create unlimited Pterodactyl panels with custom resources and configurations</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>User Management</h3>
+                        <p>Complete control over users, resellers, and permissions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Custom Eggs</h3>
+                        <p>Support for Python, Node.js, Minecraft, Discord, and more</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Real-time Analytics</h3>
+                        <p>Monitor server performance and resource usage in real-time</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3>Secure & Private</h3>
+                        <p>Enterprise-grade security with private panel management</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Responsive Design</h3>
+                        <p>Access your control panel from any device, anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2>Package Pricing</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>1GB Package</h3>
+                        <div class="price">Rp 15.000</div>
+                        <ul>
+                            <li>1GB RAM</li>
+                            <li>1GB Disk</li>
+                            <li>40% CPU</li>
+                            <li>5 Databases</li>
+                            <li>5 Backups</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>3GB Package</h3>
+                        <div class="price">Rp 35.000</div>
+                        <ul>
+                            <li>3GB RAM</li>
+                            <li>2GB Disk</li>
+                            <li>80% CPU</li>
+                            <li>5 Databases</li>
+                            <li>5 Backups</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Unlimited</h3>
+                        <div class="price">Rp 200.000</div>
+                        <ul>
+                            <li>Unlimited RAM</li>
+                            <li>Unlimited Disk</li>
+                            <li>Unlimited CPU</li>
+                            <li>Unlimited Databases</li>
+                            <li>Unlimited Backups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <h3>🌌 King Store Cpanel Private</h3>
+                        <p>Advanced Pterodactyl Panel Management</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="/login">Admin</a>
+                        <a href="#features">Features</a>
+                        <a href="#pricing">Pricing</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 King Store Cpanel Private. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
