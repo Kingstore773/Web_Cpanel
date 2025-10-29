@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - King Store Cpanel Private</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h2>🌌 King Store</h2>
+                    <span>Cpanel Private</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-title">Main Menu</div>
+                    <ul>
+                        <li class="nav-item active">
+                            <a href="/admin/dashboard" class="nav-link">
+                                <span class="nav-icon">📊</span>
+                                <span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/create-panel" class="nav-link">
+                                <span class="nav-icon">🛠️</span>
+                                <span class="nav-text">Create Panel</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/servers" class="nav-link">
+                                <span class="nav-icon">🖥️</span>
+                                <span class="nav-text">Servers</span>
+                                <span class="nav-badge" id="serversCount">0</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/reseller" class="nav-link">
+                                <span class="nav-icon">👥</span>
+                                <span class="nav-text">Reseller</span>
+                                <span class="nav-badge" id="usersCount">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-title">Settings</div>
+                    <ul>
+                        <li class="nav-item">
+                            <a href="/admin/settings" class="nav-link">
+                                <span class="nav-icon">⚙️</span>
+                                <span class="nav-text">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👑</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪 Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, <span id="welcomeName">Admin</span>! Here's what's happening today.</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="refreshStats()">
+                            🔄 Refresh
+                        </button>
+                        <div class="current-time" id="currentTime"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Alert Container -->
+            <div id="alertContainer"></div>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon total-users">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-trend">
+                        <span class="trend-up">↗</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon total-servers">🖥️</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalServers">0</div>
+                        <div class="stat-label">Total Servers</div>
+                    </div>
+                    <div class="stat-trend">
+                        <span class="trend-up">↗</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon active-servers">⚡</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="activeServers">0</div>
+                        <div class="stat-label">Active Servers</div>
+                    </div>
+                    <div class="stat-trend">
+                        <span class="trend-up">↗</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon total-nodes">🌐</div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalNodes">0</div>
+                        <div class="stat-label">Total Nodes</div>
+                    </div>
+                    <div class="stat-trend">
+                        <span class="trend-neutral">→</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions-section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions-grid">
+                    <a href="/admin/create-panel" class="quick-action-card">
+                        <div class="action-icon">➕</div>
+                        <div class="action-content">
+                            <h3>Create New Panel</h3>
+                            <p>Create a new Pterodactyl panel with custom resources</p>
+                        </div>
+                        <div class="action-arrow">→</div>
+                    </a>
+
+                    <a href="/admin/reseller" class="quick-action-card">
+                        <div class="action-icon">👥</div>
+                        <div class="action-content">
+                            <h3>Manage Resellers</h3>
+                            <p>Add and manage reseller accounts</p>
+                        </div>
+                        <div class="action-arrow">→</div>
+                    </a>
+
+                    <a href="/admin/servers" class="quick-action-card">
+                        <div class="action-icon">🖥️</div>
+                        <div class="action-content">
+                            <h3>View All Servers</h3>
+                            <p>Monitor and manage all servers</p>
+                        </div>
+                        <div class="action-arrow">→</div>
+                    </a>
+
+                    <a href="/admin/settings" class="quick-action-card">
+                        <div class="action-icon">⚙️</div>
+                        <div class="action-content">
+                            <h3>System Settings</h3>
+                            <p>Configure panel settings and preferences</p>
+                        </div>
+                        <div class="action-arrow">→</div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="recent-activity">
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                    <button class="btn btn-secondary" onclick="loadRecentActivity()">
+                        🔄 Refresh
+                    </button>
+                </div>
+                <div class="activity-list" id="activityList">
+                    <div class="activity-item loading">
+                        <div class="activity-content">
+                            <div class="activity-text">Loading recent activity...</div>
+                            <div class="activity-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Status -->
+            <section class="system-status">
+                <h2>System Status</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-indicator online"></div>
+                        <div class="status-info">
+                            <div class="status-name">Panel API</div>
+                            <div class="status-value" id="panelStatus">Checking...</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator checking"></div>
+                        <div class="status-info">
+                            <div class="status-name">Database</div>
+                            <div class="status-value" id="dbStatus">Checking...</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator checking"></div>
+                        <div class="status-info">
+                            <div class="status-name">Nodes</div>
+                            <div class="status-value" id="nodesStatus">Checking...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadDashboardStats();
+            updateCurrentTime();
+            loadRecentActivity();
+            checkSystemStatus();
+            
+            // Update time every second
+            setInterval(updateCurrentTime, 1000);
+            
+            // Refresh stats every 30 seconds
+            setInterval(loadDashboardStats, 30000);
+        });
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('currentTime').innerHTML = `
+                <div class="time">${timeString}</div>
+                <div class="date">${dateString}</div>
+            `;
+        }
+
+        function refreshStats() {
+            loadDashboardStats();
+            loadRecentActivity();
+            checkSystemStatus();
+            showAlert('Stats refreshed successfully!', 'success');
+        }
+
+        // Sidebar toggle for mobile
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>
