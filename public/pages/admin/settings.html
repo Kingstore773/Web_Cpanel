@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - King Store Cpanel Private</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <style>
+        .settings-container {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .settings-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+
+        .settings-section h3 {
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control[readonly] {
+            background-color: #f9fafb;
+            color: #6b7280;
+        }
+
+        .btn-save {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .btn-save:hover {
+            background: #059669;
+        }
+
+        .btn-test {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .btn-test:hover {
+            background: #2563eb;
+        }
+
+        .eggs-grid, .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .egg-item, .resource-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .egg-header, .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .egg-name, .resource-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .egg-id, .resource-details {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .test-success {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .test-error {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-online {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-offline {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle input {
+            padding-right: 2.5rem;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <h2>🌌 King Store</h2>
+                    <span>Cpanel Private</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-title">Main Menu</div>
+                    <ul>
+                        <li class="nav-item">
+                            <a href="/admin/dashboard" class="nav-link">
+                                <span class="nav-icon">📊</span>
+                                <span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/create-panel" class="nav-link">
+                                <span class="nav-icon">🛠️</span>
+                                <span class="nav-text">Create Panel</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/servers" class="nav-link">
+                                <span class="nav-icon">🖥️</span>
+                                <span class="nav-text">Servers</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/reseller" class="nav-link">
+                                <span class="nav-icon">👥</span>
+                                <span class="nav-text">Reseller</span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="/admin/settings" class="nav-link">
+                                <span class="nav-icon">⚙️</span>
+                                <span class="nav-text">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">👑</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-role">Administrator</div>
+                    </div>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <span>🚪 Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <h1>System Settings</h1>
+                    <p>Manage panel configuration and preferences</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-primary" onclick="loadSettings()">
+                        🔄 Refresh
+                    </button>
+                </div>
+            </header>
+
+            <div id="alertContainer"></div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-btn active" onclick="showTab('panel')">🌐 Panel Settings</button>
+                <button class="tab-btn" onclick="showTab('eggs')">🐣 Eggs Configuration</button>
+                <button class="tab-btn" onclick="showTab('resources')">📦 Resource Packages</button>
+                <button class="tab-btn" onclick="showTab('admin')">👑 Admin Account</button>
+                <button class="tab-btn" onclick="showTab('system')">⚙️ System Info</button>
+            </div>
+
+            <div class="settings-container">
+                <!-- Panel Settings Tab -->
+                <div id="panel-tab" class="tab-content active">
+                    <div class="settings-card">
+                        <div class="settings-section">
+                            <h3>🌐 Pterodactyl Panel Configuration</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="panelDomain">Panel Domain</label>
+                                    <input type="text" id="panelDomain" class="form-control" 
+                                           placeholder="panel.yourdomain.com">
+                                    <small>Your Pterodactyl panel domain (without https://)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panelApiKey">API Key (PLTA)</label>
+                                    <input type="text" id="panelApiKey" class="form-control" 
+                                           placeholder="ptla_xxxxxxxx">
+                                    <small>Application API key from Pterodactyl</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panelClientKey">Client API Key (PLTC)</label>
+                                    <input type="text" id="panelClientKey" class="form-control" 
+                                           placeholder="ptlc_xxxxxxxx">
+                                    <small>Client API key from Pterodactyl</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panelNestId">Default Nest ID</label>
+                                    <input type="text" id="panelNestId" class="form-control" 
+                                           placeholder="1">
+                                    <small>Default nest ID for eggs</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panelLocationId">Default Location ID</label>
+                                    <input type="text" id="panelLocationId" class="form-control" 
+                                           placeholder="1">
+                                    <small>Default location ID for servers</small>
+                                </div>
+                            </div>
+                            <button class="btn-save" onclick="savePanelSettings()">
+                                💾 Save Panel Settings
+                            </button>
+                            <button class="btn-test" onclick="testConnection()" style="margin-left: 1rem;">
+                                🔌 Test Connection
+                            </button>
+                            <div id="testResult" class="test-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eggs Configuration Tab -->
+                <div id="eggs-tab" class="tab-content">
+                    <div class="settings-card">
+                        <div class="settings-section">
+                            <h3>🐣 Eggs Configuration</h3>
+                            <p>Configure Egg IDs for different application types</p>
+                            <div class="eggs-grid" id="eggsList">
+                                <!-- Eggs will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resource Packages Tab -->
+                <div id="resources-tab" class="tab-content">
+                    <div class="settings-card">
+                        <div class="settings-section">
+                            <h3>📦 Resource Packages</h3>
+                            <p>Configure server resource packages and pricing</p>
+                            <div class="resources-grid" id="resourcesList">
+                                <!-- Resources will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Account Tab -->
+                <div id="admin-tab" class="tab-content">
+                    <div class="settings-card">
+                        <div class="settings-section">
+                            <h3>👑 Admin Account</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="adminUsername">Username</label>
+                                    <input type="text" id="adminUsername" class="form-control">
+                                </div>
+                                <div class="form-group password-toggle">
+                                    <label for="adminPassword">New Password</label>
+                                    <input type="password" id="adminPassword" class="form-control" 
+                                           placeholder="Leave blank to keep current">
+                                    <button type="button" class="toggle-icon" onclick="togglePassword('adminPassword')">
+                                        👁️
+                                    </button>
+                                </div>
+                                <div class="form-group password-toggle">
+                                    <label for="adminCurrentPassword">Current Password</label>
+                                    <input type="password" id="adminCurrentPassword" class="form-control" 
+                                           placeholder="Required for password change">
+                                    <button type="button" class="toggle-icon" onclick="togglePassword('adminCurrentPassword')">
+                                        👁️
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="btn-save" onclick="saveAdminSettings()">
+                                💾 Update Admin Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info Tab -->
+                <div id="system-tab" class="tab-content">
+                    <div class="settings-card">
+                        <div class="settings-section">
+                            <h3>⚙️ System Information</h3>
+                            <div class="info-grid" id="systemInfo">
+                                <!-- System info will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentSettings = {};
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuth();
+            loadSettings();
+        });
+
+        // Authentication check
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (!result.success) {
+                    window.location.href = '/login';
+                } else {
+                    document.getElementById('userName').textContent = result.user.username;
+                }
+            } catch (error) {
+                window.location.href = '/login';
+            }
+        }
+
+        // Load settings
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentSettings = result.data;
+                    displayPanelSettings();
+                    displayEggs();
+                    displayResources();
+                    displayAdminSettings();
+                    displaySystemInfo();
+                } else {
+                    showAlert('Failed to load settings: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                showAlert('Network error while loading settings', 'error');
+            }
+        }
+
+        // Display panel settings
+        function displayPanelSettings() {
+            if (currentSettings.panel) {
+                document.getElementById('panelDomain').value = currentSettings.panel.domain || '';
+                document.getElementById('panelApiKey').value = currentSettings.panel.api_key || '';
+                document.getElementById('panelClientKey').value = currentSettings.panel.client_key || '';
+                document.getElementById('panelNestId').value = currentSettings.panel.nest_id || '';
+                document.getElementById('panelLocationId').value = currentSettings.panel.location_id || '';
+            }
+        }
+
+        // Display eggs configuration
+        function displayEggs() {
+            const eggsList = document.getElementById('eggsList');
+            
+            if (currentSettings.eggs) {
+                eggsList.innerHTML = Object.entries(currentSettings.eggs).map(([key, eggId]) => `
+                    <div class="egg-item">
+                        <div class="egg-header">
+                            <div class="egg-name">${formatEggName(key)}</div>
+                            <button class="btn-test" onclick="editEgg('${key}')">✏️ Edit</button>
+                        </div>
+                        <div class="egg-id">ID: ${eggId}</div>
+                        <div class="form-group" style="margin-top: 0.5rem; display: none;" id="edit-${key}">
+                            <input type="text" id="egg-${key}" class="form-control" value="${eggId}" 
+                                   placeholder="Enter Egg ID">
+                            <button class="btn-save" onclick="saveEgg('${key}')" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">
+                                💾 Save
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Display resource packages
+        function displayResources() {
+            const resourcesList = document.getElementById('resourcesList');
+            
+            if (currentSettings.resources) {
+                resourcesList.innerHTML = Object.entries(currentSettings.resources).map(([key, resource]) => `
+                    <div class="resource-item">
+                        <div class="resource-header">
+                            <div class="resource-name">${formatPackageName(key)}</div>
+                            <button class="btn-test" onclick="editResource('${key}')">✏️ Edit</button>
+                        </div>
+                        <div class="resource-details">
+                            <div>RAM: ${resource.ram} MB</div>
+                            <div>Disk: ${resource.disk} MB</div>
+                            <div>CPU: ${resource.cpu}%</div>
+                            <div>Price: Rp ${resource.price}</div>
+                        </div>
+                        <div class="form-group" style="margin-top: 0.5rem; display: none;" id="edit-resource-${key}">
+                            <input type="number" id="ram-${key}" class="form-control" value="${resource.ram}" placeholder="RAM (MB)" style="margin-bottom: 0.5rem;">
+                            <input type="number" id="disk-${key}" class="form-control" value="${resource.disk}" placeholder="Disk (MB)" style="margin-bottom: 0.5rem;">
+                            <input type="number" id="cpu-${key}" class="form-control" value="${resource.cpu}" placeholder="CPU (%)" style="margin-bottom: 0.5rem;">
+                            <input type="number" id="price-${key}" class="form-control" value="${resource.price}" placeholder="Price">
+                            <button class="btn-save" onclick="saveResource('${key}')" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">
+                                💾 Save
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Display admin settings
+        function displayAdminSettings() {
+            if (currentSettings.admin) {
+                document.getElementById('adminUsername').value = currentSettings.admin.username || 'admin';
+            }
+        }
+
+        // Display system information
+        function displaySystemInfo() {
+            const systemInfo = document.getElementById('systemInfo');
+            
+            systemInfo.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">Website Name</div>
+                    <div class="info-value">${currentSettings.website?.name || 'King Store Cpanel Private'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Version</div>
+                    <div class="info-value">${currentSettings.website?.version || '1.0.0'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Panel Domain</div>
+                    <div class="info-value">${currentSettings.panel?.domain || 'Not set'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Nest ID</div>
+                    <div class="info-value">${currentSettings.panel?.nest_id || 'Not set'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Location ID</div>
+                    <div class="info-value">${currentSettings.panel?.location_id || 'Not set'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Available Eggs</div>
+                    <div class="info-value">${currentSettings.eggs ? Object.keys(currentSettings.eggs).length : 0}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Resource Packages</div>
+                    <div class="info-value">${currentSettings.resources ? Object.keys(currentSettings.resources).length : 0}</div>
+                </div>
+            `;
+        }
+
+        // Save panel settings
+        async function savePanelSettings() {
+            const panelData = {
+                domain: document.getElementById('panelDomain').value,
+                api_key: document.getElementById('panelApiKey').value,
+                client_key: document.getElementById('panelClientKey').value,
+                nest_id: document.getElementById('panelNestId').value,
+                location_id: document.getElementById('panelLocationId').value
+            };
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'update_settings',
+                        section: 'panel',
+                        data: panelData
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('Panel settings updated successfully', 'success');
+                    loadSettings(); // Reload settings
+                } else {
+                    showAlert('Failed to update panel settings: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error while saving settings', 'error');
+            }
+        }
+
+        // Edit egg
+        function editEgg(eggKey) {
+            const editDiv = document.getElementById(`edit-${eggKey}`);
+            editDiv.style.display = editDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Save egg
+        async function saveEgg(eggKey) {
+            const eggId = document.getElementById(`egg-${eggKey}`).value;
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'update_egg',
+                        data: {
+                            eggKey: eggKey,
+                            eggId: eggId
+                        }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert(result.message, 'success');
+                    loadSettings(); // Reload settings
+                } else {
+                    showAlert('Failed to update egg: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error while updating egg', 'error');
+            }
+        }
+
+        // Edit resource
+        function editResource(resourceKey) {
+            const editDiv = document.getElementById(`edit-resource-${resourceKey}`);
+            editDiv.style.display = editDiv.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Save resource
+        async function saveResource(resourceKey) {
+            const resourceData = {
+                ram: parseInt(document.getElementById(`ram-${resourceKey}`).value),
+                disk: parseInt(document.getElementById(`disk-${resourceKey}`).value),
+                cpu: parseInt(document.getElementById(`cpu-${resourceKey}`).value),
+                price: parseInt(document.getElementById(`price-${resourceKey}`).value)
+            };
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'update_resource',
+                        data: {
+                            packageKey: resourceKey,
+                            resourceData: resourceData
+                        }
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert(result.message, 'success');
+                    loadSettings(); // Reload settings
+                } else {
+                    showAlert('Failed to update resource: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error while updating resource', 'error');
+            }
+        }
+
+        // Save admin settings
+        async function saveAdminSettings() {
+            const adminData = {
+                username: document.getElementById('adminUsername').value,
+                password: document.getElementById('adminPassword').value,
+                currentPassword: document.getElementById('adminCurrentPassword').value
+            };
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'update_admin',
+                        data: adminData
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('Admin credentials updated successfully', 'success');
+                    document.getElementById('adminPassword').value = '';
+                    document.getElementById('adminCurrentPassword').value = '';
+                    loadSettings(); // Reload settings
+                } else {
+                    showAlert('Failed to update admin: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Network error while updating admin', 'error');
+            }
+        }
+
+        // Test connection
+        async function testConnection() {
+            const testResult = document.getElementById('testResult');
+            testResult.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'test_connection'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    testResult.className = 'test-result test-success';
+                    testResult.innerHTML = `
+                        <strong>✅ Connection Successful!</strong><br>
+                        Panel URL: <a href="https://${currentSettings.panel?.domain}" target="_blank">https://${currentSettings.panel?.domain}</a><br>
+                        Found ${result.data.usersCount} users in the system.
+                    `;
+                } else {
+                    testResult.className = 'test-result test-error';
+                    testResult.innerHTML = `
+                        <strong>❌ Connection Failed</strong><br>
+                        ${result.message}
+                    `;
+                }
+            } catch (error) {
+                testResult.className = 'test-result test-error';
+                testResult.innerHTML = `
+                    <strong>❌ Network Error</strong><br>
+                    Unable to connect to the API server.
+                `;
+            }
+
+            testResult.style.display = 'block';
+        }
+
+        // Tab navigation
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+        }
+
+        // Utility functions
+        function formatEggName(key) {
+            const names = {
+                'python': 'Python Application',
+                'nodejs': 'Node.js Application', 
+                'minecraft': 'Minecraft Server',
+                'discord': 'Discord Bot',
+                'website': 'Website',
+                'php': 'PHP Application',
+                'java': 'Java Application'
+            };
+            return names[key] || key.charAt(0).toUpperCase() + key.slice(1);
+        }
+
+        function formatPackageName(key) {
+            if (key === 'unlimited') return 'Unlimited Package';
+            return key.toUpperCase() + ' Package';
+        }
+
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertId = 'alert-' + Date.now();
+            
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>${message}</span>
+                    <button onclick="document.getElementById('${alertId}').remove()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: inherit;">
+                        ×
+                    </button>
+                </div>
+            `;
+            alert.id = alertId;
+            
+            alertContainer.appendChild(alert);
+            
+            setTimeout(() => {
+                if (document.getElementById(alertId)) {
+                    document.getElementById(alertId).remove();
+                }
+            }, 5000);
+        }
+
+        // Logout
+        async function logout() {
+            try {
+                const response = await fetch('/api/auth', {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = '/login';
+                }
+            } catch (error) {
+                window.location.href = '/login';
+            }
+        }
+
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>
